@@ -36,6 +36,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'mittab.apps.tab',
+    'sass_processor',
     'raven.contrib.django.raven_compat',
     'widget_tweaks',
 )
@@ -98,6 +99,16 @@ STATIC_ROOT = BASE_DIR
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'mittab', 'static'),
 )
+
+STATICFILE_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'sass_processor.finders.CssFinder',
+]
+
+SASS_PROCCESSOR_INCLUDE_DIRS = [
+    os.path.join(BASE_DIR, 'mittab', 'static', 'css'),
+]
 
 TEMPLATES = [
     {
