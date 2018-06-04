@@ -1,5 +1,9 @@
 *.py[cod]
 
+# Staticfiles
+css/
+img/
+
 # C extensions
 *.so
 
