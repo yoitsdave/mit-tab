@@ -395,7 +395,10 @@ def public_status_by_team(request, team_name, team_ref=None):
             return _public_status_paring_exists(request, team_name, matches, 
                                                 round_number)
         else:
+            everyone = {'group': "everyone"}
+            
             out = {
+                    'webpush': everyone,
                     'no_navigation': True,
                     'bye': False,
                     'pairing_exists': False,

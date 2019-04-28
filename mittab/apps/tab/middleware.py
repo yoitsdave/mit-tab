@@ -12,6 +12,7 @@ regex_white_list = (
     re.compile("/e_ballots/\S+"),
     re.compile("/public_status/team_name/([\w-]+)"),
     re.compile("/public_status/debater_name/([\w-]+)"),
+    re.compile("/webpush/([\w-]+)"),
 )
 
 

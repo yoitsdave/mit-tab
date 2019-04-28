@@ -24,6 +24,7 @@ import mittab.libs.tab_logic as tab_logic
 import mittab.libs.assign_judges as assign_judges
 import mittab.libs.backup as backup
 
+from webpush import send_group_notification
 
 @permission_required('tab.tab_settings.can_change', login_url="/403/")
 def swap_judges_in_round(request, src_round, src_judge, dest_round, dest_judge):
@@ -372,6 +373,15 @@ def toggle_pairing_released(request):
     TabSettings.set("pairing_released", int(not old))
     data = {"success": True,
             "pairing_released": int(not old) == 1}
+    
+    if not old:
+        payload = {
+            "head": "Pairings Have Been Released!", 
+            "body": "Search for your name or your team's name to see your next round"
+        }
+        
+        send_group_notification(group_name="everyone", payload=payload, ttl=300)
+    
     return JsonResponse(data)
 
 def pretty_pair(request, printable=False):

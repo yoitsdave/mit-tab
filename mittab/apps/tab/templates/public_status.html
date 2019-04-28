@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% load webpush_notifications %}
+
 {% block title %} Public Status for {{ team_name }} {% endblock %}
 
 {% block content %}
@@ -18,6 +20,11 @@
 
     Round {{round_number}} does not yet have a valid pairing. Please wait until
     your tournament directors release a valid pairing before viewing this page.
+    
+    <br><br>
+    
+    If you would like to be notified when the pairing is released, click the 
+    subscribe button {% webpush_button %}
 
   {% endif %}
 {% endblock %}

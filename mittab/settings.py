@@ -36,6 +36,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'mittab.apps.tab',
     'raven.contrib.django.raven_compat',
+    'webpush',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -117,3 +118,37 @@ TEMPLATES = [
         },
     },
 ]
+
+from py_vapid import Vapid01
+from cryptography.hazmat.primitives import serialization
+from py_vapid.utils import b64urlencode
+
+#Webpush Settings allow django-webpush to push notifications to chrome users
+#note that because this is generated dynamically, users will have to resubscribe
+#if the server restarts in the middle of a tournament
+
+vapid = Vapid01()
+vapid.generate_keys()
+
+VAPID_PUBLIC_KEY = b64urlencode(vapid.public_key.public_bytes(
+    encoding=serialization.Encoding.DER,
+    format=serialization.PublicFormat.SubjectPublicKeyInfo
+))
+
+VAPID_PRIVATE_KEY = b64urlencode(vapid.private_key.private_bytes(
+    encoding=serialization.Encoding.DER,
+    format=serialization.PrivateFormat.PKCS8,
+    encryption_algorithm=serialization.NoEncryption()
+))
+
+
+print("public")
+print(VAPID_PUBLIC_KEY)
+print("private")
+print(VAPID_PRIVATE_KEY)
+
+WEBPUSH_SETTINGS = {
+    "VAPID_PUBLIC_KEY": VAPID_PUBLIC_KEY,
+    "VAPID_PRIVATE_KEY": VAPID_PRIVATE_KEY,
+    "VAPID_ADMIN_EMAIL": "judahjlevy@gmail.com"
+}
