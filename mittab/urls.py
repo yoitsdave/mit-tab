@@ -111,9 +111,8 @@ urlpatterns = [
     url(r'^import_data/$', views.upload_data),
     
     # Publicly accessible personal pages
-    url(r'^public_status/team_name/([\w-]+)/', team_views.public_status_by_team),
-    url(r'^public_status/debater_name/([\w-]+)/', team_views.public_status_by_debater),
-    
+    url(r'^public_status/(\d+)/$', team_views.public_status),
+  
     # Webpush, to allow push notifications for round toggle_pairing_released
     url(r'^webpush/', include('webpush.urls')),
 ]
